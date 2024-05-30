@@ -5,6 +5,8 @@ import create_excel as ce
 import os
 
 # go to streamlit doc and get config file to make sure you host on localhost
+
+
 def mainPage():
 
     st.set_page_config(page_title="Image Tool", layout="wide")
@@ -23,7 +25,8 @@ def mainPage():
             st.write(
                 "When setting is run, it will create an input folder in the current directory where you place your images, then you have to run it again to create the output folder, where the results will be placed."
             )
-            st.write("Once that's all set, click run after checking your desired functions.")
+            st.write(
+                "Once that's all set, click run after checking your desired functions.")
             st.write(
                 'When done, a new button "Show Images" will appear that will show at least three of the images submitted'
             )
@@ -35,11 +38,11 @@ def mainPage():
             resize = st.checkbox("Resize", value=False)
             rename = st.checkbox("Rename", value=False)
 
-    with right_column:
-        st.info( # make into button options
-            'This slider can be thought of as the "strength" of the background removal, so bigger number, more of the image will be removed...'
-        )
-        kSize = st.slider("Removal Strength", 1, 15, 7, 2)
+    # with right_column:
+    #     st.info(  # make into button options
+    #         'This slider can be thought of as the "strength" of the background removal, so bigger number, more of the image will be removed...'
+    #     )
+    #     kSize: int = st.slider("Removal Strength", 1, 15, 7, 2)
 
     with middle_column:
         if resize or rename:
@@ -52,15 +55,12 @@ def mainPage():
         right_column.write(ms.Setting())
     run = right_column.button("Run")
 
+    kSize: int = 7
     if run:
         with st.spinner("Please wait... Processing"):
-            right_column.write(ms.Run(rembg, crop_im, resize, rename, (kSize, kSize)))
+            right_column.write(
+                ms.Run(rembg, crop_im, resize, rename, (kSize, kSize)))
         st.balloons()
-        # show_im = st.button("See images here")
-        # if show_im:
-        #     st.session_state.runpage = imagePage
-        #     st.session_state.runpage()
-        #     st.experimental_rerun()
 
 
 def imagePage():
@@ -72,8 +72,6 @@ def imagePage():
         st.experimental_rerun()
     st.write("# Skim Image Tool!")
     st.write(" --- ")
-
-    output_images = os.listdir("output")
 
     st.write("# Here's what a few of the images look like:")
     st.image("output/New.png")

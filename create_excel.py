@@ -1,15 +1,13 @@
 import pandas as pd
-import re
 import os
 from PIL import Image
-import pillow_avif
 import warnings
+
 
 def create_excel():
     warnings.filterwarnings("ignore")
 
     writer = pd.ExcelWriter("Input_setting.xlsx", engine="xlsxwriter")
-
 
     # Image List Sheet
     dir_list = os.listdir("input")
@@ -19,8 +17,6 @@ def create_excel():
     width_list = list()
 
     for i in range(len(dir_list)):
-        pattern = r"([A-Za-z0-9_-]+)."
-        name = re.findall(pattern, dir_list[i])[0]
         im = Image.open("input/" + dir_list[i])
         width, height = im.size
 
@@ -30,7 +26,8 @@ def create_excel():
 
     image_df = pd.DataFrame(
         index=list(range(1, len(dir_list) + 1)),
-        columns=["Current Name", "Height", "Width", "New Name", "Target Height"],
+        columns=["Current Name", "Height",
+                 "Width", "New Name", "Target Height"],
     )
 
     image_df["Current Name"] = name_list
